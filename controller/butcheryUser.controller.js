@@ -1,4 +1,3 @@
-const { generateTokenAndSetCookie } = require("../utils/generateToken");
 const { butcheryUserDB } = require("./../models/butcheryUser.models");
 const bcrypt = require("bcrypt");
 

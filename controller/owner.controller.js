@@ -1,5 +1,4 @@
 const { ownerDB } = require("../models/owner.modles");
-const { generateTokenAndSetCookie } = require("../utils/generateToken");
 const bcrypt = require("bcrypt");
 
 // GET
