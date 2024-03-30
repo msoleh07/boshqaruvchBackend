@@ -1,5 +1,4 @@
 const { workerDB } = require("../models/worker.modles");
-const { generateTokenAndSetCookie } = require("../utils/generateToken");
 const bcrypt = require("bcrypt");
 const { goshtxonaDB, shashlikxonaDB } = require("../models/prices.models");
 const { butcheryUserDB } = require("../models/butcheryUser.models");
@@ -58,7 +57,6 @@ const workerUserSignUp = async (req, res) => {
 
     if (newUser) {
       //Generate JWT token hareawait newUser.save();
-      generateTokenAndSetCookie(newUser._id, res);
       res.status(201).json({
         status: "successfuly",
         msg: "user addat database",
@@ -87,8 +85,6 @@ const workerUserLogin = async (req, res) => {
       return res.status(400).json({ error: "Invalid username or password" });
     }
 
-    generateTokenAndSetCookie(user._id, res);
-
     res.status(200).json({
       status: "successfuly",
       msg: "done",
@@ -102,7 +98,6 @@ const workerUserLogin = async (req, res) => {
 
 const workerUserLogout = (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ massage: "Logged out successfully" });
   } catch (error) {
     console.log("Error in workerUserLogout controller", error.massage);

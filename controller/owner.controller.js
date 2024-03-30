@@ -60,7 +60,6 @@ const ownSignUp = async (req, res) => {
 
     if (newUser) {
       //Generate JWT token hareawait newUser.save();
-      generateTokenAndSetCookie(newUser._id, res);
       res.status(201).json({
         status: "successfuly",
         msg: "Owner addat database",
@@ -89,8 +88,6 @@ const ownLogin = async (req, res) => {
       return res.status(400).json({ error: "Invalid username or password" });
     }
 
-    generateTokenAndSetCookie(user._id, res);
-
     res.status(200).json({
       status: "successfuly",
       msg: "done",
@@ -104,7 +101,6 @@ const ownLogin = async (req, res) => {
 
 const ownLogout = (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
     res.status(200).json({ massage: "Logged out successfully" });
   } catch (error) {
     console.log("Error in ownLogout controller", error.massage);
