@@ -1,4 +1,5 @@
-const ownerRoutes = require("express").Router();
+const express = require("express");
+const ownerRoutes = express.Router();
 
 const {
   getOwnData,

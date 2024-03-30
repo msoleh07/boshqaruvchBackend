@@ -7,7 +7,7 @@ const {
   butcheryUserLogout,
 } = require("../controller/butcheryUser.controller");
 
-butcheryUser.get("/get", getButcheryUser);
+butcheryUser.get("/", getButcheryUser);
 butcheryUser.post("/signup", butcheryUserSignUp);
 butcheryUser.post("/login", butcheryUserLogin);
 butcheryUser.post("/logout", butcheryUserLogout);

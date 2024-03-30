@@ -1,4 +1,5 @@
-const pricesRoute = require("express").Router();
+const express = require("express");
+const pricesRoute = express.Router();
 
 const {
   createGoshtxonaPrice,

@@ -1,4 +1,5 @@
-const workerUserRoutes = require("express").Router();
+const express = require("express");
+const workerUserRoutes = express.Router();
 
 const {
   getWorkerUser,

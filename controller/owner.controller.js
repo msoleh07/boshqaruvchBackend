@@ -58,7 +58,6 @@ const ownSignUp = async (req, res) => {
     });
 
     if (newUser) {
-      //Generate JWT token hareawait newUser.save();
       res.status(201).json({
         status: "successfuly",
         msg: "Owner addat database",
