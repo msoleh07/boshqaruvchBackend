@@ -4,8 +4,10 @@ const bcrypt = require("bcrypt");
 // GET
 const getButcheryUser = async (req, res) => {
   try {
+    // Barcha butchery foydalanuvchilarni topish
     const allButcheryUser = await butcheryUserDB.find();
 
+    // Agar foydalanuvchilar topilmagan bo'lsa, 404 xatolikni qaytarib beramiz
     if (!allButcheryUser.length) {
       return res.status(404).json({
         status: "warning",
@@ -13,12 +15,15 @@ const getButcheryUser = async (req, res) => {
         innerData: allButcheryUser,
       });
     }
+
+    // Barcha butchery foydalanuvchilarni muvaffaqiyatli topib, 200 status kodi bilan javob qaytarib beramiz
     res.status(200).json({
       status: "success",
       msg: "All butchery user are found",
       innerData: allButcheryUser,
     });
 
+    // butcheryUserDB ma'lumotlar bazasini o'chirish (kerak bo'lsa)
     // let empty = await butcheryUserDB.deleteMany({});
     // if (!empty) {
     //   return res
@@ -27,6 +32,7 @@ const getButcheryUser = async (req, res) => {
     // }
     // res.send({ msg: "collection is cleared", innerData: empty });
   } catch (error) {
+    // Xatolikni nazorat qilish
     console.error("Error in getButcheryUser: ", error.message);
     res.status(500).json({ error: "Internal server error" });
   }

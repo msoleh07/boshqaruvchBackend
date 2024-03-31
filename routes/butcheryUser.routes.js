@@ -1,4 +1,5 @@
-const butcheryUser = require("express").Router();
+const express = require("express");
+const butcheryUser = express.Router();
 
 const {
   getButcheryUser,

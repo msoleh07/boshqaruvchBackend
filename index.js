@@ -1,8 +1,6 @@
 const express = require("express");
 const cors = require("cors");
 
-const coockiParser = require("cookie-parser");
-
 require("dotenv").config();
 require("colors");
 
@@ -12,7 +10,6 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(coockiParser());
 
 app.get("/", (req, res) => res.send(`<h1>Welcome to work server</h1>`));
 
