@@ -21,6 +21,8 @@ app.use("/api/butcheryUser", function (req, res, next) {
   // Keyingi middleware ga o'tish
   next();
 });
+const butcheryUserRoutes = require("./routes/butcheryUser.routes"); // <-- 'butcheryUserRoutes' nomi to'g'rilandi
+app.use("/api/butcheryUser", butcheryUserRoutes);
 
 app.use("/api/workerUser", function (req, res, next) {
   // node-cron ishga tushirish
@@ -28,6 +30,8 @@ app.use("/api/workerUser", function (req, res, next) {
   // Keyingi middleware ga o'tish
   next();
 });
+const workerUserRoutes = require("./routes/workerUser.routes"); // <-- 'workerUserRoutes' nomi to'g'rilandi
+app.use("/api/workerUser", workerUserRoutes);
 
 app.use("/api/owner", function (req, res, next) {
   // node-cron ishga tushirish
@@ -35,6 +39,8 @@ app.use("/api/owner", function (req, res, next) {
   // Keyingi middleware ga o'tish
   next();
 });
+const ownerRoutes = require("./routes/owner.routes"); // <-- 'ownerRoutes' nomi to'g'rilandi
+app.use("/api/owner", ownerRoutes);
 
 app.use("/api/prices", function (req, res, next) {
   // node-cron ishga tushirish
@@ -43,13 +49,7 @@ app.use("/api/prices", function (req, res, next) {
   next();
 });
 
-const butcheryUserRoutes = require("./routes/butcheryUser.routes"); // <-- 'butcheryUserRoutes' nomi to'g'rilandi
-const workerUserRoutes = require("./routes/workerUser.routes"); // <-- 'workerUserRoutes' nomi to'g'rilandi
-const ownerRoutes = require("./routes/owner.routes"); // <-- 'ownerRoutes' nomi to'g'rilandi
 const pricesRoute = require("./routes/prices.routes"); // <-- 'pricesRoute' nomi to'g'rilandi
-app.use("/api/butcheryUser", butcheryUserRoutes);
-app.use("/api/workerUser", workerUserRoutes);
-app.use("/api/owner", ownerRoutes);
 app.use("/api/prices", pricesRoute);
 
 const { connectToMongoDB } = require("./db/connectToMongoDB");
