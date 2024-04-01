@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-
+const { connect } = require("mongoose");
 require("dotenv").config();
 require("colors");
 
@@ -14,6 +14,11 @@ app.use(express.json());
 app.use(cors());
 
 app.get("/", (req, res) => res.send(`<h1>Welcome to work server</h1>`));
+
+// CONNECTING TO DATABASE
+connect(process.env.MONGO_DB_URI)
+  .then(() => console.log("Connected to Database".bgGreen))
+  .catch(() => console.log("Not connected to Database".bgRed));
 
 app.use("/api/butcheryUser", function (req, res, next) {
   // node-cron ishga tushirish
@@ -52,9 +57,6 @@ app.use("/api/prices", function (req, res, next) {
 const pricesRoute = require("./routes/prices.routes"); // <-- 'pricesRoute' nomi to'g'rilandi
 app.use("/api/prices", pricesRoute);
 
-const { connectToMongoDB } = require("./db/connectToMongoDB");
-
 app.listen(PORT, () => {
   console.log(`app listen port: http://localhost:${PORT}`.bgBlue);
-  connectToMongoDB();
 });
