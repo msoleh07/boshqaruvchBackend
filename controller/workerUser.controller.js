@@ -95,19 +95,8 @@ const workerUserLogin = async (req, res) => {
   }
 };
 
-const workerUserLogout = (req, res) => {
-  try {
-    res.status(200).json({ massage: "Logged out successfully" });
-  } catch (error) {
-    console.log("Error in workerUserLogout controller", error.massage);
-    res.status(500).json({ error: "Interval Server Error" });
-  }
-};
-
 const workerAddData = async (req, res) => {
   try {
-    let dataBody = req.body;
-
     let { username, value, addMan } = req.body;
     let { addMincedMeat, addMeat } = value;
 
@@ -135,18 +124,20 @@ const workerAddData = async (req, res) => {
     const meatDataG = await goshtxonaDB.findOne();
 
     if (addMincedMeat) {
-      let quantity = findUser.addMincedMeat.find(
-        (q) => q.quantity === addMincedMeat
-      );
-      let quantityG = findAddMan.addMincedMeat.find(
-        (q) => q.quantity === addMincedMeat
-      );
-      if (quantity || quantityG) {
-        return res.status(409).json({
-          msg: "Data already exists",
-          status: "Warning",
-          innerData: findUser,
-        });
+      if (findUser.addMincedMeat.find((tod) => tod.addetTime === today)) {
+        let quantity = findUser.addMincedMeat.find(
+          (q) => q.quantity === addMincedMeat
+        );
+        let quantityG = findAddMan.addMincedMeat.find(
+          (q) => q.quantity === addMincedMeat
+        );
+        if (quantity || quantityG) {
+          return res.status(409).json({
+            msg: "Data already exists",
+            status: "Warning",
+            innerData: findUser,
+          });
+        }
       }
 
       const { mincedMeat } = data; // Get data from "data"
@@ -178,15 +169,18 @@ const workerAddData = async (req, res) => {
     }
 
     if (addMeat) {
-      let quantity = findUser.addMeat.find((q) => q.quantity === addMeat);
-      let quantityG = findAddMan.addMeat.find((q) => q.quantity === addMeat);
-      if (quantity || quantityG) {
-        return res.status(409).json({
-          msg: "Data already exists",
-          status: "Warning",
-          innerData: findUser,
-        });
+      if (findUser.addMeat.find((tod) => tod.addetTime === today)) {
+        let quantity = findUser.addMeat.find((q) => q.quantity === addMeat);
+        let quantityG = findAddMan.addMeat.find((q) => q.quantity === addMeat);
+        if (quantity || quantityG) {
+          return res.status(409).json({
+            msg: "Data already exists",
+            status: "Warning",
+            innerData: findUser,
+          });
+        }
       }
+
       const { meat } = data; // Get data from "data"
       const totalMoney = meat * addMeat; // Calculate totalMoney
       const totalMoneyG = meatDataG.meat * addMeat;
@@ -242,6 +236,5 @@ module.exports = {
   getWorkerUser,
   workerUserSignUp,
   workerUserLogin,
-  workerUserLogout,
   workerAddData,
 };

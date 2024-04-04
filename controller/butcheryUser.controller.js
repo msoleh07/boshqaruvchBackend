@@ -135,15 +135,15 @@ const addMeatKG = async (req, res) => {
 
       const totalMoney = meatKGdata.meatKG * meatKG; // Calculate totalMoney
 
-      // Push data to meatKG array
-      findUser.addMeatKg.push({
+      // unshift data to meatKG array
+      findUser.addMeatKg.unshift({
         quantity: meatKG,
         addetTime: today,
         totalMoney: totalMoney,
       });
 
-      // Push data to userStories array
-      findUser.userStories.push({
+      // unshift data to userStories array
+      findUser.userStories.unshift({
         addetTime: today,
         addMeatKg: {
           quantity: meatKG,
