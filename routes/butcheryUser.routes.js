@@ -5,12 +5,12 @@ const {
   getButcheryUser,
   butcheryUserSignUp,
   butcheryUserLogin,
-  butcheryUserLogout,
+  addMeatKG,
 } = require("../controller/butcheryUser.controller");
 
 butcheryUser.get("/", getButcheryUser);
 butcheryUser.post("/signup", butcheryUserSignUp);
 butcheryUser.post("/login", butcheryUserLogin);
-butcheryUser.post("/logout", butcheryUserLogout);
+butcheryUser.post("/addMeatKG", addMeatKG);
 
 module.exports = butcheryUser;

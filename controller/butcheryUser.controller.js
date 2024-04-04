@@ -1,3 +1,4 @@
+const { goshtxonaDB } = require("../models/prices.models");
 const { butcheryUserDB } = require("./../models/butcheryUser.models");
 const bcrypt = require("bcrypt");
 
@@ -103,11 +104,64 @@ const butcheryUserLogin = async (req, res) => {
   }
 };
 
-const butcheryUserLogout = (req, res) => {
+const addMeatKG = async (req, res) => {
   try {
-    res.status(200).json({ massage: "Logged out successfully" });
+    let { username, value } = req.body;
+    let { meatKG } = value;
+
+    const findUser = await butcheryUserDB.findOne({ username });
+
+    if (!findUser) {
+      return res.status(404).json({
+        msg: "Not found user data",
+        status: "Warning",
+        innerData: findUser,
+      });
+    }
+
+    const today = new Date();
+    const meatKGdata = await goshtxonaDB.findOne();
+
+    if (meatKG) {
+      let quantity = findUser.addMeatKg.find((q) => q.quantity === meatKG);
+
+      if (quantity) {
+        return res.status(409).json({
+          msg: "Data already exists",
+          status: "Warning",
+          innerData: findUser,
+        });
+      }
+
+      const totalMoney = meatKGdata.meatKG * meatKG; // Calculate totalMoney
+
+      // Push data to meatKG array
+      findUser.addMeatKg.push({
+        quantity: meatKG,
+        addetTime: today,
+        totalMoney: totalMoney,
+      });
+
+      // Push data to userStories array
+      findUser.userStories.push({
+        addetTime: today,
+        addMeatKg: {
+          quantity: meatKG,
+          addetTime: today,
+          totalMoney: totalMoney,
+        },
+      });
+    }
+
+    await findUser.save();
+
+    res.status(200).json({
+      msg: "Data successfully saved",
+      status: "successfully",
+      innerData: findUser,
+    });
   } catch (error) {
-    console.log("Error in butcheryUserLogout controller", error.massage);
+    console.log("Error in addMeatKG controller", error.massage);
     res.status(500).json({ error: "Interval Server Error" });
   }
 };
@@ -116,5 +170,5 @@ module.exports = {
   getButcheryUser,
   butcheryUserSignUp,
   butcheryUserLogin,
-  butcheryUserLogout,
+  addMeatKG,
 };
