@@ -121,106 +121,169 @@ const workerAddData = async (req, res) => {
 
     const today = new Date();
     const data = await shashlikxonaDB.findOne();
-    const meatDataG = await goshtxonaDB.findOne();
-
-    if (addMincedMeat) {
-      if (findUser.addMincedMeat.find((tod) => tod.addetTime === today)) {
-        let quantity = findUser.addMincedMeat.find(
-          (q) => q.quantity === addMincedMeat
-        );
-        let quantityG = findAddMan.addMincedMeat.find(
-          (q) => q.quantity === addMincedMeat
-        );
-        if (quantity || quantityG) {
-          return res.status(409).json({
-            msg: "Data already exists",
-            status: "Warning",
-            innerData: findUser,
-          });
-        }
-      }
-
-      const { mincedMeat } = data; // Get data from "data"
-      const totalMoney = mincedMeat * addMincedMeat; // Calculate totalMoney
-      const totalMoneyG = meatDataG.mincedMeat * addMincedMeat; // Calculate totalMoney
-
-      // Push data to addMincedMeat array
-      findUser.addMincedMeat.push({
-        quantity: addMincedMeat,
-        addetTime: today,
-        totalMoney: totalMoney,
-      });
-
-      findAddMan.addMincedMeat.push({
-        quantity: addMincedMeat,
-        addetTime: today,
-        totalMoney: totalMoneyG,
-      });
-
-      // Push data to userStories array
-      findAddMan.userStories.push({
-        addetTime: today,
-        addMincedMeat: {
-          quantity: addMincedMeat,
-          addetTime: today,
-          totalMoney: totalMoneyG,
-        },
-      });
-    }
+    const pricesData = await goshtxonaDB.findOne();
 
     if (addMeat) {
-      if (findUser.addMeat.find((tod) => tod.addetTime === today)) {
-        let quantity = findUser.addMeat.find((q) => q.quantity === addMeat);
-        let quantityG = findAddMan.addMeat.find((q) => q.quantity === addMeat);
-        if (quantity || quantityG) {
+      const dataTime = findUser.addMeat.find(
+        (addTime) => addTime.addetTime.getDay() === today.getDay()
+      );
+
+      if (dataTime) {
+        const findQuantity = findUser.addMeat.find(
+          (findQtn) => findQtn.meat.quantity === addMeat
+        );
+        if (findQuantity) {
           return res.status(409).json({
             msg: "Data already exists",
             status: "Warning",
-            innerData: findUser,
+            innerData: addMeat,
           });
         }
       }
 
       const { meat } = data; // Get data from "data"
       const totalMoney = meat * addMeat; // Calculate totalMoney
-      const totalMoneyG = meatDataG.meat * addMeat;
+      const totalPrices = pricesData.meat * addMeat;
 
-      // Push data to addMeat array
-      findUser.addMeat.push({
-        quantity: addMeat,
+      findUser.addMeat.unshift({
         addetTime: today,
-        totalMoney: totalMoney,
-      });
-
-      // Push data to userStories array
-      findUser.userStories.push({
-        addetTime: today,
-        addMeat: {
+        money: {
+          totalMoney,
+          addetTime: today,
+        },
+        meat: {
           quantity: addMeat,
           addetTime: today,
-          totalMoney: totalMoney,
+          totalMoney,
         },
       });
 
-      findAddMan.addMeat.push({
-        quantity: addMeat,
-        addetTime: today,
-        totalMoney: totalMoneyG,
-      });
-
-      // Push data to userStories array
-      findAddMan.userStories.push({
+      findUser.userStories.unshift({
         addetTime: today,
         addMeat: {
+          money: {
+            totalMoney,
+            addetTime: today,
+          },
+          meat: {
+            quantity: addMeat,
+            addetTime: today,
+            totalMoney,
+          },
+        },
+      });
+
+      findAddMan.addMeat.unshift({
+        addetTime: today,
+        money: {
+          totalMoney: totalPrices,
+          addetTime: today,
+        },
+        meat: {
           quantity: addMeat,
           addetTime: today,
-          totalMoney: totalMoneyG,
+          totalMoney: totalPrices,
+        },
+      });
+
+      findAddMan.userStories.unshift({
+        addetTime: today,
+        addMeat: {
+          money: {
+            totalMoney: totalPrices,
+            addetTime: today,
+          },
+          meat: {
+            quantity: addMeat,
+            addetTime: today,
+            totalMoney: totalPrices,
+          },
+        },
+      });
+    }
+
+    if (addMincedMeat) {
+      const dataTime = findUser.addMincedMeat.find(
+        (addTime) => addTime.addetTime.getDay() === today.getDay()
+      );
+
+      if (dataTime) {
+        const findQuantity = findUser.addMincedMeat.find(
+          (findQtn) => findQtn.mincedMeat.quantity === addMincedMeat
+        );
+        if (findQuantity) {
+          return res.status(409).json({
+            msg: "Data already exists",
+            status: "Warning",
+            innerData: addMincedMeat,
+          });
+        }
+      }
+
+      const { mincedMeat } = data; // Get data from "data"
+      const totalMoney = mincedMeat * addMincedMeat; // Calculate totalMoney
+      const totalPrices = pricesData.mincedMeat * addMincedMeat;
+
+      findUser.addMincedMeat.unshift({
+        addetTime: today,
+        money: {
+          totalMoney,
+          addetTime: today,
+        },
+        meat: {
+          quantity: addMeat,
+          addetTime: today,
+          totalMoney,
+        },
+      });
+
+      findUser.userStories.unshift({
+        addetTime: today,
+        addMincedMeat: {
+          money: {
+            totalMoney,
+            addetTime: today,
+          },
+          mincedMeat: {
+            quantity: addMeat,
+            addetTime: today,
+            totalMoney,
+          },
+        },
+      });
+
+      findAddMan.addMincedMeat.unshift({
+        addetTime: today,
+        money: {
+          totalMoney: totalPrices,
+          addetTime: today,
+        },
+        meat: {
+          quantity: addMincedMeat,
+          addetTime: today,
+          totalMoney: totalPrices,
+        },
+      });
+
+      findAddMan.userStories.unshift({
+        addetTime: today,
+        addMincedMeat: {
+          money: {
+            totalMoney: totalPrices,
+            addetTime: today,
+          },
+          meat: {
+            quantity: addMincedMeat,
+            addetTime: today,
+            totalMoney: totalPrices,
+          },
         },
       });
     }
 
     await findUser.save();
     await findAddMan.save();
+
     res.status(200).json({
       msg: "Data successfully saved",
       status: "successfully",

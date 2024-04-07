@@ -23,122 +23,129 @@ const userSchema = new Schema({
     default: "butchery",
     required: true,
   },
-  addMincedMeat: [
-    {
-      quantity: {
-        type: Number,
-        default: 0,
-      },
-      addedTime: {
-        type: Date,
-        default: Date.now,
-      },
-      totalMoney: {
-        type: Number,
-        default: 0,
-      },
-    },
-  ],
-  addMeat: [
-    {
-      quantity: {
-        type: Number,
-        default: 0,
-      },
-      addedTime: {
-        type: Date,
-        default: Date.now,
-      },
-      totalMoney: {
-        type: Number,
-        default: 0,
-      },
-    },
-  ],
-  addMeatKg: [
-    {
-      quantity: {
-        type: Number,
-        default: 0,
-      },
-      addedTime: {
-        type: Date,
-        default: Date.now,
-      },
-      totalMoney: {
-        type: Number,
-        default: 0,
-      },
-    },
-  ],
-  userStories: [
-    {
-      addedTime: { type: Date, default: Date.now },
-      addMincedMeat: [
-        {
-          quantity: {
-            type: Number,
-            default: 0,
-          },
-          addedTime: {
-            type: Date,
-            default: Date.now,
-          },
-          totalMoney: {
-            type: Number,
-            default: 0,
-          },
+  addMincedMeat: {
+    type: [
+      {
+        addetTime: { type: Date, default: Date.now },
+        money: {
+          totalMoney: { type: Number, default: 0 },
+          addetTime: { type: Date, default: Date.now },
         },
-      ],
-      addMeat: [
-        {
-          quantity: {
-            type: Number,
-            default: 0,
-          },
-          addedTime: {
-            type: Date,
-            default: Date.now,
-          },
-          totalMoney: {
-            type: Number,
-            default: 0,
-          },
-        },
-      ],
-      addMeatKg: [
-        {
-          quantity: {
-            type: Number,
-            default: 0,
-          },
-          addedTime: {
-            type: Date,
-            default: Date.now,
-          },
-          totalMoney: {
-            type: Number,
-            default: 0,
-          },
-        },
-      ],
-      totalMoney: { type: Number, default: 0 },
-    },
-  ],
-  personAbout: [
-    {
-      addedTime: { type: Date, default: Date.now },
-      addExitData: [
-        {
-          firstname: {
-            type: String,
-            required: true,
-          },
+        mincedMeat: {
+          quantity: { type: Number, default: 0 },
+          addetTime: { type: Date, default: Date.now },
           totalMoney: { type: Number, default: 0 },
         },
-      ],
-    },
-  ],
+      },
+    ],
+    default: [],
+  },
+  addMeat: {
+    type: [
+      {
+        addetTime: { type: Date, default: Date.now },
+        money: {
+          totalMoney: { type: Number, default: 0 },
+          addetTime: { type: Date, default: Date.now },
+        },
+        meat: {
+          quantity: { type: Number, default: 0 },
+          addetTime: { type: Date, default: Date.now },
+          totalMoney: { type: Number, default: 0 },
+        },
+      },
+    ],
+    default: [],
+  },
+  addMeatKg: {
+    type: [
+      {
+        addetTime: { type: Date, default: Date.now },
+        money: {
+          totalMoney: { type: Number, default: 0 },
+          addetTime: { type: Date, default: Date.now },
+        },
+        meatKg: {
+          quantity: { type: Number, default: 0 },
+          addetTime: { type: Date, default: Date.now },
+          totalMoney: { type: Number, default: 0 },
+        },
+      },
+    ],
+    default: [],
+  },
+  userStories: {
+    type: [
+      {
+        addedTime: { type: Date, default: Date.now },
+        addMincedMeat: {
+          type: {
+            addetTime: { type: Date, default: Date.now },
+            money: {
+              totalMoney: { type: Number, default: 0 },
+              addetTime: { type: Date, default: Date.now },
+            },
+            mincedMeat: {
+              quantity: { type: Number, default: 0 },
+              addetTime: { type: Date, default: Date.now },
+              totalMoney: { type: Number, default: 0 },
+            },
+          },
+          default: {},
+        },
+        addMeat: {
+          type: {
+            addetTime: { type: Date, default: Date.now },
+            money: {
+              totalMoney: { type: Number, default: 0 },
+              addetTime: { type: Date, default: Date.now },
+            },
+            meat: {
+              quantity: { type: Number, default: 0 },
+              addetTime: { type: Date, default: Date.now },
+              totalMoney: { type: Number, default: 0 },
+            },
+          },
+
+          default: {},
+        },
+        addMeatKg: {
+          type: {
+            addetTime: { type: Date, default: Date.now },
+            money: {
+              totalMoney: { type: Number, default: 0 },
+              addetTime: { type: Date, default: Date.now },
+            },
+            meatKg: {
+              quantity: { type: Number, default: 0 },
+              addetTime: { type: Date, default: Date.now },
+              totalMoney: { type: Number, default: 0 },
+            },
+          },
+          default: {},
+        },
+      },
+    ],
+  },
+
+  personAbout: {
+    type: [
+      {
+        addedTime: { type: Date, default: Date.now },
+        addExitData: {
+          type: {
+            firstname: {
+              type: String,
+              required: true,
+            },
+            totalMoney: { type: Number, default: 0 },
+          },
+        },
+      },
+    ],
+    default: [],
+  },
+
   monthMoney: {
     exitMoney: { type: Number, default: 0 },
     totalMoney: { type: Number, default: 0 },

@@ -123,32 +123,50 @@ const addMeatKG = async (req, res) => {
     const meatKGdata = await goshtxonaDB.findOne();
 
     if (meatKG) {
-      let quantity = findUser.addMeatKg.find((q) => q.quantity === meatKG);
+      const dataTime = findUser.addMeatKg.find(
+        (addTime) => addTime.addetTime.getDay() === today.getDay()
+      );
 
-      if (quantity) {
-        return res.status(409).json({
-          msg: "Data already exists",
-          status: "Warning",
-          innerData: findUser,
-        });
+      if (dataTime) {
+        const findQuantity = findUser.addMeatKg.find(
+          (findQtn) => findQtn.meatKg.quantity === meatKG
+        );
+        if (findQuantity) {
+          return res.status(409).json({
+            msg: "Data already exists",
+            status: "Warning",
+            innerData: meatKG,
+          });
+        }
       }
 
-      const totalMoney = meatKGdata.meatKG * meatKG; // Calculate totalMoney
+      const totalMoney = meatKGdata.meatKG * meatKG;
 
-      // unshift data to meatKG array
       findUser.addMeatKg.unshift({
-        quantity: meatKG,
         addetTime: today,
-        totalMoney: totalMoney,
+        money: {
+          totalMoney,
+          addetTime: today,
+        },
+        meatKg: {
+          quantity: meatKG,
+          addetTime: today,
+          totalMoney,
+        },
       });
 
-      // unshift data to userStories array
       findUser.userStories.unshift({
         addetTime: today,
         addMeatKg: {
-          quantity: meatKG,
-          addetTime: today,
-          totalMoney: totalMoney,
+          money: {
+            totalMoney,
+            addetTime: today,
+          },
+          meatKg: {
+            quantity: meatKG,
+            addetTime: today,
+            totalMoney,
+          },
         },
       });
     }
