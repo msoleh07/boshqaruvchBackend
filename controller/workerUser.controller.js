@@ -230,7 +230,7 @@ const workerAddData = async (req, res) => {
           totalMoney,
           addetTime: today,
         },
-        meat: {
+        mincedMeat: {
           quantity: addMeat,
           addetTime: today,
           totalMoney,
@@ -245,7 +245,7 @@ const workerAddData = async (req, res) => {
             addetTime: today,
           },
           mincedMeat: {
-            quantity: addMeat,
+            quantity: addMincedMeat,
             addetTime: today,
             totalMoney,
           },
@@ -258,7 +258,7 @@ const workerAddData = async (req, res) => {
           totalMoney: totalPrices,
           addetTime: today,
         },
-        meat: {
+        mincedMeat: {
           quantity: addMincedMeat,
           addetTime: today,
           totalMoney: totalPrices,
@@ -272,7 +272,7 @@ const workerAddData = async (req, res) => {
             totalMoney: totalPrices,
             addetTime: today,
           },
-          meat: {
+          mincedMeat: {
             quantity: addMincedMeat,
             addetTime: today,
             totalMoney: totalPrices,
