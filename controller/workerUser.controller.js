@@ -124,9 +124,14 @@ const workerAddData = async (req, res) => {
     const pricesData = await goshtxonaDB.findOne();
 
     if (addMeat) {
-      const dataTime = findUser.addMeat.find(
-        (addTime) => addTime.addetTime.getDay() === today.getDay()
-      );
+      const dataTime = findUser.addMeat.find((addTime) => {
+        const addetDate = new Date(addTime.addetTime);
+        return (
+          addetDate.getFullYear() === today.getFullYear() &&
+          addetDate.getMonth() === today.getMonth() &&
+          addetDate.getDate() === today.getDate()
+        );
+      });
 
       if (dataTime) {
         const findQuantity = findUser.addMeat.find(
@@ -203,9 +208,14 @@ const workerAddData = async (req, res) => {
     }
 
     if (addMincedMeat) {
-      const dataTime = findUser.addMincedMeat.find(
-        (addTime) => addTime.addetTime.getDay() === today.getDay()
-      );
+      const dataTime = findUser.addMincedMeat.find((addTime) => {
+        const addetDate = new Date(addTime.addetTime);
+        return (
+          addetDate.getFullYear() === today.getFullYear() &&
+          addetDate.getMonth() === today.getMonth() &&
+          addetDate.getDate() === today.getDate()
+        );
+      });
 
       if (dataTime) {
         const findQuantity = findUser.addMincedMeat.find(

@@ -123,9 +123,14 @@ const addMeatKG = async (req, res) => {
     const meatKGdata = await goshtxonaDB.findOne();
 
     if (meatKG) {
-      const dataTime = findUser.addMeatKg.find(
-        (addTime) => addTime.addetTime.getDay() === today.getDay()
-      );
+      const dataTime = findUser.addMeatKg.find((addTime) => {
+        const addetDate = new Date(addTime.addetTime);
+        return (
+          addetDate.getFullYear() === today.getFullYear() &&
+          addetDate.getMonth() === today.getMonth() &&
+          addetDate.getDate() === today.getDate()
+        );
+      });
 
       if (dataTime) {
         const findQuantity = findUser.addMeatKg.find(
