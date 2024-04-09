@@ -241,7 +241,7 @@ const workerAddData = async (req, res) => {
           addetTime: today,
         },
         mincedMeat: {
-          quantity: addMeat,
+          quantity: addMincedMeat,
           addetTime: today,
           totalMoney,
         },
