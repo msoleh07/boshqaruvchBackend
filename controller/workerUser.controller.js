@@ -160,6 +160,7 @@ const workerAddData = async (req, res) => {
           quantity: addMeat,
           addetTime: today,
           totalMoney,
+          addWorkerName: findAddMan.firstname,
         },
       });
 
@@ -174,6 +175,7 @@ const workerAddData = async (req, res) => {
             quantity: addMeat,
             addetTime: today,
             totalMoney,
+            addWorkerName: findAddMan.firstname,
           },
         },
       });
@@ -188,6 +190,7 @@ const workerAddData = async (req, res) => {
           quantity: addMeat,
           addetTime: today,
           totalMoney: totalPrices,
+          addWorkerName: findUser.firstname,
         },
       });
 
@@ -202,9 +205,20 @@ const workerAddData = async (req, res) => {
             quantity: addMeat,
             addetTime: today,
             totalMoney: totalPrices,
+            addWorkerName: findUser.firstname,
           },
         },
       });
+
+      await findUser.save();
+      await findAddMan.save();
+
+      res.status(200).json({
+        msg: "Data successfully saved",
+        status: "successfully",
+        innerData: findUser,
+      });
+      return;
     }
 
     if (addMincedMeat) {
@@ -244,6 +258,7 @@ const workerAddData = async (req, res) => {
           quantity: addMincedMeat,
           addetTime: today,
           totalMoney,
+          addWorkerName: findAddMan.firstname,
         },
       });
 
@@ -258,6 +273,7 @@ const workerAddData = async (req, res) => {
             quantity: addMincedMeat,
             addetTime: today,
             totalMoney,
+            addWorkerName: findAddMan.firstname,
           },
         },
       });
@@ -272,6 +288,7 @@ const workerAddData = async (req, res) => {
           quantity: addMincedMeat,
           addetTime: today,
           totalMoney: totalPrices,
+          addWorkerName: findUser.firstname,
         },
       });
 
@@ -286,19 +303,21 @@ const workerAddData = async (req, res) => {
             quantity: addMincedMeat,
             addetTime: today,
             totalMoney: totalPrices,
+            addWorkerName: findUser.firstname,
           },
         },
       });
+
+      await findUser.save();
+      await findAddMan.save();
+
+      res.status(200).json({
+        msg: "Data successfully saved",
+        status: "successfully",
+        innerData: findUser,
+      });
+      return;
     }
-
-    await findUser.save();
-    await findAddMan.save();
-
-    res.status(200).json({
-      msg: "Data successfully saved",
-      status: "successfully",
-      innerData: findUser,
-    });
   } catch (error) {
     console.log("Error in workerAddData controller", error.message);
     res.status(500).json({ error: "Internal Server Error" });
