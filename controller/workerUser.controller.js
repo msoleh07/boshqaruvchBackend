@@ -324,9 +324,34 @@ const workerAddData = async (req, res) => {
   }
 };
 
+const workerDeleteOneUser = async (req, res) => {
+  try {
+    let { id } = req.params;
+
+    let deleteUser = await workerDB.findByIdAndDelete(id);
+
+    if (!deleteUser) {
+      return res.status(404).json({
+        msg: "worker user is not found",
+        status: true,
+        innerData: deleteUser,
+      });
+    }
+    res.send({
+      status: true,
+      msg: "worker user is deleted",
+      innerData: deleteUser,
+    });
+  } catch (error) {
+    console.log("Error in workerDeleteOneUser controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getWorkerUser,
   workerUserSignUp,
   workerUserLogin,
   workerAddData,
+  workerDeleteOneUser,
 };

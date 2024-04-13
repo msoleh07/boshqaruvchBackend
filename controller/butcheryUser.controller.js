@@ -189,9 +189,34 @@ const addMeatKG = async (req, res) => {
   }
 };
 
+const butcheryDeleteOneUser = async (req, res) => {
+  try {
+    let { id } = req.params;
+
+    let deleteUser = await butcheryUserDB.findByIdAndDelete(id);
+
+    if (!deleteUser) {
+      return res.status(404).json({
+        msg: "butchery user is not found",
+        status: true,
+        innerData: deleteUser,
+      });
+    }
+    res.send({
+      status: true,
+      msg: "butchery user is deleted",
+      innerData: deleteUser,
+    });
+  } catch (error) {
+    console.log("Error in butcheryDeleteOneUser controller", error.message);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 module.exports = {
   getButcheryUser,
   butcheryUserSignUp,
   butcheryUserLogin,
   addMeatKG,
+  butcheryDeleteOneUser,
 };
